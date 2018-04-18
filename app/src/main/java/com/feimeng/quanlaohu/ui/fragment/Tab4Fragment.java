@@ -16,7 +16,9 @@ import com.feimeng.quanlaohu.base.App;
 import com.feimeng.quanlaohu.base.BaseNoLazyFragment;
 import com.feimeng.quanlaohu.base.Urls;
 import com.feimeng.quanlaohu.model.LzyResponse;
+import com.feimeng.quanlaohu.model.bean.UserCenterBean;
 import com.feimeng.quanlaohu.model.callback.JsonCallback;
+import com.feimeng.quanlaohu.ui.activity.IncomeActivity;
 import com.feimeng.quanlaohu.ui.activity.LoginActivity;
 import com.feimeng.quanlaohu.ui.adapter.HomeFiveRecyclerAdapter;
 import com.feimeng.quanlaohu.ui.adapter.SettingNorRecyclerAdapter;
@@ -63,6 +65,8 @@ public class Tab4Fragment extends BaseNoLazyFragment {
     TextView mTvMoneyToday;
     @BindView(R.id.tv_money_out)
     TextView mTvMoneyOut;
+    @BindView(R.id.ll_get_money)
+    LinearLayout mLlGetMoney;
 
 
     private HomeFiveRecyclerAdapter mHomeFiveRecyclerAdapter;
@@ -111,21 +115,24 @@ public class Tab4Fragment extends BaseNoLazyFragment {
     }
 
 
-
     /**
      * 获取money数据
      */
     private void getMoneyData() {
-        OkGo.<LzyResponse<String>>post(Urls.USER_CENTER)
+        OkGo.<LzyResponse<UserCenterBean>>post(Urls.USER_CENTER)
                 .tag(this)
-                .params("sign",App.userInfo.user_id)
-                .execute(new JsonCallback<LzyResponse<String>>() {
+                .params("sign", App.userInfo.user_id)
+                .execute(new JsonCallback<LzyResponse<UserCenterBean>>() {
                     @Override
-                    public void onSuccess(Response<LzyResponse<String>> response) {
-                        if (response.body()!=null) {
+                    public void onSuccess(Response<LzyResponse<UserCenterBean>> response) {
+                        if (response.body() != null) {
                             if (response.body().status == 1) {
-                             //成功
-
+                                //成功
+                                mTvMoneyToday.setText("¥" + response.body().data.todayIncome);
+                                mTvMoneyOut.setText("¥" + response.body().data.forecastIncome);
+                            } else {
+                                mTvMoneyToday.setText("¥0.00");
+                                mTvMoneyOut.setText("¥0.00");
                             }
                         }
                     }
@@ -205,5 +212,14 @@ public class Tab4Fragment extends BaseNoLazyFragment {
                 MyToast.show(getActivity(), "复制成功");
             }
         });
+        //去提现
+        mLlGetMoney.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                intentActivity(IncomeActivity.class,false);
+            }
+        });
     }
+
+
 }

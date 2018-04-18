@@ -187,13 +187,13 @@
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/ll_get_money"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:gravity="center"
                     android:layout_height="match_parent">
                     <TextView
-
                         android:background="@drawable/shape_rounder3_orange"
                         android:textStyle="bold"
                         android:paddingLeft="@dimen/dp_12"
