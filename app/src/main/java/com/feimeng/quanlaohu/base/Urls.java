@@ -13,4 +13,6 @@ public interface Urls {
     String LOGIN_NOR =BASE_URL+ "register/login" ;
     //个人中心接口
     String USER_CENTER = BASE_URL + "tk/personal-info";
+    //收益
+    String INCOME_CENTER = BASE_URL + "tk/income-detail";
 }

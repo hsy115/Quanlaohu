@@ -40,7 +40,10 @@ public abstract class BaseActivity extends FragmentActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setRequestedOrientation(ActivityInfo
                 .SCREEN_ORIENTATION_PORTRAIT);//竖屏
-        initBar();
+        if (!delBar()){
+            initBar();
+        }
+
         //初始化布局
         setContentView(initContentView());
         ButterKnife.bind(this);
@@ -48,6 +51,10 @@ public abstract class BaseActivity extends FragmentActivity {
         initView();
         initData();
         initListener();
+    }
+
+    protected boolean delBar() {
+        return false;
     }
 
     protected void initBar() {

@@ -27,7 +27,7 @@ public class UserBean implements Serializable{
      * code : null
      * settlement : 0
      * forecastIncome : 0
-     * incomeAll : 0
+     * incomeAll : 0 累计收入
      * incomeTakeOut : 0
      * proportions : 0
      * incomeInvite : 0

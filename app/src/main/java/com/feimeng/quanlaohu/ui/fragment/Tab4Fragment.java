@@ -2,6 +2,7 @@ package com.feimeng.quanlaohu.ui.fragment;
 
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.feimeng.quanlaohu.R;
 import com.feimeng.quanlaohu.base.App;
 import com.feimeng.quanlaohu.base.BaseNoLazyFragment;
@@ -20,6 +23,7 @@ import com.feimeng.quanlaohu.model.bean.UserCenterBean;
 import com.feimeng.quanlaohu.model.callback.JsonCallback;
 import com.feimeng.quanlaohu.ui.activity.IncomeActivity;
 import com.feimeng.quanlaohu.ui.activity.LoginActivity;
+import com.feimeng.quanlaohu.ui.activity.OrderInfoActivity;
 import com.feimeng.quanlaohu.ui.adapter.HomeFiveRecyclerAdapter;
 import com.feimeng.quanlaohu.ui.adapter.SettingNorRecyclerAdapter;
 import com.feimeng.quanlaohu.util.MyToast;
@@ -216,7 +220,21 @@ public class Tab4Fragment extends BaseNoLazyFragment {
         mLlGetMoney.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                intentActivity(IncomeActivity.class,false);
+                if (App.isLogin) {
+                    Intent i = new Intent(mActivity,IncomeActivity.class);
+                    i.putExtra("money",mTvMoneyOut.getText().toString().trim());
+                    startActivity(i);
+                    mActivity.overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+                }else {
+                    intentActivity(LoginActivity.class,false);
+                }
+            }
+        });
+        //订单
+        mRecyclerOrder.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+                intentActivity(OrderInfoActivity.class,false);
             }
         });
     }
